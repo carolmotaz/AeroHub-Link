@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AeroHub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome via CDN (garante ícones) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+
+
+  <div class="card">
+    
+    <img src="assets/image-removebg-preview (2).png" alt="AeroHub Logo" class="logo">
+
+    <p class="subtitle">Tecnologia que Voa com Você!</p>
+
+
+    <a class="btn" href="https://www.instagram.com/aerohubstartup?igsh=NDdsNXF3emRiMTlz&utm_source=qr" target="_blank">
+      <i class="fab fa-instagram" aria-hidden="true"></i>
+      <span class="sr-only">Instagram</span> Instagram
+    </a>
+
+    <a class="btn" href="https://www.linkedin.com/company/aerohubstartup/" target="_blank">
+      <i class="fab fa-linkedin" aria-hidden="true"></i>
+      <span class="sr-only">LinkedIn</span> LinkedIn
+    </a>
+
+    <a class="btn gradient" href="https://aerohub.com" target="_blank">
+    <img src="assets/image-removebg-preview (3).png" alt="AeroHub logo" class="btn-logo" width="30" height="30"> <span style="color:#fff;">AeroHub</span>
+    </a>
+
+    <div class="actions" style="display:flex;gap:10px;">
+        <button class="action-btn share" style="display:flex;align-items:center;justify-content:center;padding:10px 16px;">Compartilhar</button>
+        <button class="action-btn qr" style="display:flex;align-items:center;justify-content:center;padding:10px 16px;">Mostrar QR</button>
+        <script>
+        (function(){
+            const btns = Array.from(document.querySelectorAll('.action-btn'));
+            const shareBtn = btns.find(b => b.textContent.trim().toLowerCase().startsWith('compart'));
+            if (!shareBtn) return;
+
+            shareBtn.addEventListener('click', async function () {
+                const url = window.location.href;
+                try {
+                    if (navigator.share) {
+                        await navigator.share({ title: document.title, url });
+                        return;
+                    }
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        await navigator.clipboard.writeText(url);
+                    } else {
+                        const input = document.createElement('input');
+                        input.value = url;
+                        document.body.appendChild(input);
+                        input.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(input);
+                    }
+                    const original = shareBtn.innerHTML;
+                    shareBtn.innerHTML = 'Copiado!';
+                    setTimeout(() => shareBtn.innerHTML = original, 2000);
+                } catch (err) {
+                    console.error(err);
+                    alert('Não foi possível copiar o link.');
+                }
+            }, false);
+        })();
+        </script>
+    </div>
+
+    <p class="info">Toque/Abra um botão para visitar.</p>
+
+  </div>
+
+</body>
+</html>
