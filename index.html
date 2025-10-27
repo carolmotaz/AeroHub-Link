@@ -74,6 +74,78 @@
         </script>
     </div>
 
+    <!-- QR overlay (hidden by default). O script abaixo tenta localizar um arquivo de QR comum em assets -->
+    <div id="qrOverlay" class="qr-overlay" aria-hidden="true" hidden>
+      <div class="qr-modal" role="dialog" aria-modal="true" aria-label="QR Code">
+        <button class="qr-close" aria-label="Fechar QR">×</button>
+        <img id="qrImg" class="qr-img" src="" alt="QR code">
+      </div>
+    </div>
+
+    <script>
+    (function () {
+      const qrBtn = document.querySelector('.action-btn.qr');
+      const overlay = document.getElementById('qrOverlay');
+      const qrImg = document.getElementById('qrImg');
+      const closeBtn = overlay.querySelector('.qr-close');
+
+      // Lista de nomes de arquivo comuns. Ajuste/adicione o nome exato do seu arquivo se souber.
+      const candidates = [
+        'assets/AeroHub-1024.jpeg',
+
+      ];
+
+      function showOverlay() {
+        overlay.hidden = false;
+        overlay.setAttribute('aria-hidden', 'false');
+        requestAnimationFrame(() => overlay.classList.add('open'));
+      }
+      function hideOverlay() {
+        overlay.classList.remove('open');
+        overlay.setAttribute('aria-hidden', 'true');
+        // esperar a transição antes de esconder totalmente
+        overlay.addEventListener('transitionend', function onEnd() {
+          overlay.hidden = true;
+          overlay.removeEventListener('transitionend', onEnd);
+        });
+      }
+
+      // Tenta carregar cada candidato até encontrar um válido
+      async function findAndShowQR() {
+        for (const src of candidates) {
+          // tenta carregar a imagem
+          const img = new Image();
+          const ok = await new Promise(resolve => {
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = src + '?_=' + Date.now(); // bust cache
+          });
+          if (ok) {
+            qrImg.src = img.src;
+            showOverlay();
+            return;
+          }
+        }
+        alert('Não foi possível localizar a imagem do QR em assets. Verifique o nome do arquivo.');
+      }
+
+      if (qrBtn) {
+        qrBtn.addEventListener('click', findAndShowQR);
+      }
+
+      // fechar ao clicar fora do modal ou no botão de fechar
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) hideOverlay();
+      });
+      closeBtn.addEventListener('click', hideOverlay);
+
+      // fechar com Esc
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !overlay.hidden) hideOverlay();
+      });
+    })();
+    </script>
+
     <p class="info">Toque/Abra um botão para visitar.</p>
 
   </div>
