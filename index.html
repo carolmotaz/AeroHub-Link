@@ -13,8 +13,6 @@
 </head>
 <body>
 
-
-
   <div class="card">
     
     <img src="assets/image-removebg-preview (2).png" alt="AeroHub Logo" class="logo">
@@ -147,8 +145,39 @@
     </script>
 
     <p class="info">Toque/Abra um botão para visitar.</p>
+  </div> <!-- fecha .card -->
 
-  </div>
+  <!-- Seção de membros: lista simples (nome + LinkedIn) — ficará abaixo do card -->
+  <section id="membersSection" class="members-section" aria-label="Integrantes com LinkedIn">
+    <h3 class="members-section-title">Integrantes da AeroHub</h3>
+    <ul class="members-list">
+      <li><a href="https://www.linkedin.com/in/brian-vigo/" target="_blank" rel="noopener">Brian Vigo</a></li>
+      <li><a href="https://www.linkedin.com/in/carolinesilva-mota/" target="_blank" rel="noopener">Caroline Mota</a></li>
+      <li><a href="https://www.linkedin.com/in/cristian-harold10/" target="_blank" rel="noopener">Cristian Harold</a></li>
+      <li><a href="https://www.linkedin.com/in/einer-sulivan/" target="_blank" rel="noopener">Einer Sulivan</a></li>
+      <li><a href="https://www.linkedin.com/in/maria-fernanda-falcao/" target="_blank" rel="noopener">Maria Fernanda</a></li>
+      <li><a href="https://www.linkedin.com/in/pauloricardoab/" target="_blank" rel="noopener">Paulo Ricardo</a></li>
+      <li><a href="https://www.linkedin.com/in/rafael-santos-45b365235/" target="_blank" rel="noopener">Rafael Santos</a></li>
+      <li><a href="https://www.linkedin.com/in/sofiatorquato/" target="_blank" rel="noopener">Sofia Barboza</a></li>
+    </ul>
+  </section>
+  
+  <!-- reveal lazy: adiciona .in-view quando a seção entra na viewport -->
+  <script>
+    (function () {
+      const section = document.getElementById('membersSection');
+      if (!section) return;
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            section.classList.add('in-view');
+            obs.unobserve(section);
+          }
+        });
+      }, { threshold: 0.12 });
+      io.observe(section);
+    })();
+  </script>
 
 </body>
 </html>

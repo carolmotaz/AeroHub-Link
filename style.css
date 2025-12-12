@@ -15,11 +15,13 @@
 
 body {
   background: linear-gradient(130deg, var(--azul-escuro), var(--ciano));
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  flex-direction: column;      /* <--- mudar aqui para empilhar verticalmente */
+  justify-content: flex-start;
+  align-items: center;         /* centra horizontalmente */
+  padding: 48px 12px;
+  overflow-y: auto;
   position: relative;
 }
 
@@ -47,6 +49,7 @@ body {
   text-align: center;
   box-shadow: 0px 22px 60px rgba(0, 0, 0, 0.24);
   z-index: 2;
+  margin: 0 auto 18px;
 }
 
 /* Logo e titulos */
@@ -252,4 +255,85 @@ h1 {
   line-height: 1;
   cursor: pointer;
   padding: 6px;
+}
+
+/* links que envolvem cada mini-card */
+.member-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 10px;
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+.member-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(1,77,110,0.06);
+  background: rgba(255,255,255,0.02);
+}
+
+/* garante que o .member dentro do link ocupe 100% da área clicável */
+.member-link .member {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 8px; /* espaço para o ícone linkedin */
+}
+
+/* ícone linkedin já presente à direita */
+.member-link .fab.fa-linkedin {
+  flex: 0 0 20px;
+  align-self: center;
+}
+
+/* Ajustes responsivos e centralização / permitir scroll para revelar membros */
+/* substituir regras de body/card para permitir página rolável e centrar card no topo */
+body {
+  background: linear-gradient(130deg, var(--azul-escuro), var(--ciano));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;      /* <--- mudar aqui para empilhar verticalmente */
+  justify-content: flex-start;
+  align-items: center;         /* centra horizontalmente */
+  padding: 48px 12px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* garante que o card fique centralizado e com margem inferior para rolagem */
+.card {
+  margin: 0 auto 18px;
+  width: 100%;
+  max-width: 440px;
+  box-sizing: border-box;
+}
+
+/* seção de membros (fora do card) - inicialmente escondida e aparece ao rolar */
+.members-section {
+  width: 100%;
+  max-width: 440px; /* manter mesma largura do card para ficar alinhado */
+  margin: 8px auto 64px;
+  padding: 12px;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 420ms cubic-bezier(.2,.9,.2,1), transform 420ms cubic-bezier(.2,.9,.2,1);
+  pointer-events: none;
+}
+.members-section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* título e lista simples */
+.members-section-title { color: var(--branco-gelo); text-align: center; margin-bottom: 12px; font-size: 16px; }
+.members-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.members-list li { background: rgba(255,255,255,0.03); border-radius: 10px; padding: 10px 14px; box-shadow: 0 6px 18px rgba(1,77,110,0.03); }
+.members-list a { color: var(--branco-gelo); text-decoration: none; font-weight: 600; display: block; }
+.members-list a:hover { text-decoration: underline; transform: translateY(-2px); }
+
+/* responsivo: ajustar paddings */
+@media (max-width: 720px) {
+  .card { width: 92%; padding: 24px 18px; }
+  .members-section { max-width: 92%; margin: 12px auto 48px; padding: 10px; }
+  .members-list li { padding: 10px 12px; font-size: 15px; }
 }
